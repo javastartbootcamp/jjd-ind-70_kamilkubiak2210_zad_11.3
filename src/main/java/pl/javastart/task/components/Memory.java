@@ -1,33 +1,21 @@
 package pl.javastart.task.components;
 
-import pl.javastart.task.Overclockable;
-import pl.javastart.task.exceptions.TooHighTemperatureException;
-
-public class Memory extends Component implements Overclockable {
-
+public class Memory extends OverclcockableComponent {
     int amountOfRam;
-    int timing;
-    int temperature;
-    final int maxSafeTemp;
 
     public Memory(String model, String producer, int serialNumber, int amountOfRam, int timing, int temperature, int maxSafeTemp) {
-        super(model, producer, serialNumber);
+        super(model, producer, serialNumber, timing, temperature, maxSafeTemp);
         this.amountOfRam = amountOfRam;
-        this.timing = timing;
-        this.temperature = temperature;
-        this.maxSafeTemp = maxSafeTemp;
     }
 
     @Override
-    public void overclock() {
+    int temperatureStep() {
+        return 15;
+    }
 
-        if (temperature + 15 <= maxSafeTemp) {
-            temperature += 15;
-            timing += 100;
-            System.out.println("Podkręcono pamięć ram");
-        } else {
-            throw new TooHighTemperatureException("Uwaga, za duża temperatura, nie udało się podkręcić pamięci RAM");
-        }
+    @Override
+    String componentName() {
+        return "RAM";
     }
 
     @Override

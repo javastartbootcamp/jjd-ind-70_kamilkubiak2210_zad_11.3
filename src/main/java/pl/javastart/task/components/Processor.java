@@ -1,30 +1,19 @@
 package pl.javastart.task.components;
 
-import pl.javastart.task.Overclockable;
-import pl.javastart.task.exceptions.TooHighTemperatureException;
-
-public class Processor extends Component implements Overclockable {
-
-    int timing;
-    int temperature;
-    final int maxSafeTemp;
+public class Processor extends OverclcockableComponent {
 
     public Processor(String model, String producer, int serialNumber, int timing, int temperature, int maxSafeTemp) {
-        super(model, producer, serialNumber);
-        this.timing = timing;
-        this.temperature = temperature;
-        this.maxSafeTemp = maxSafeTemp;
+        super(model, producer, serialNumber, timing, temperature, maxSafeTemp);
     }
 
     @Override
-    public void overclock() {
-        if (temperature + 10 <= maxSafeTemp) {
-            temperature += 10;
-            timing += 100;
-            System.out.println("Podkręcono procesor");
-        } else {
-            throw new TooHighTemperatureException("Uwaga, za duża temperatura, nie udało się podkręcić procesora");
-        }
+    int temperatureStep() {
+        return 10;
+    }
+
+    @Override
+    String componentName() {
+        return "procesor";
     }
 
     @Override
